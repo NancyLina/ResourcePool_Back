@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>数据库处理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+    <script src="http://apps.bdimg.com/libs/vue/1.0.8/vue.min.js"></script>
+
+    <script>
+        window.onload = function () {
+            new Vue({
+                el: '#box',
+                data: {
+                    myData: [],
+                    username: '',
+                    age: '',
+                    nowIndex: -100
+                },
+                methods: {
+                    drop_table: function () {
+                        var output = {"name": this.title};
+                        $.ajax({
+                            url: "/patent/drop",
+                            type: "post",
+                            data: JSON.stringify(output),
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function f(data) {
+                                // var JsonData=JSON.parse(data);
+                                alert(data.information);
+                            }
+                        });
+                    },
+                    clear_table: function () {
+                        var output = {"record": this.username, "name": this.age};
+                        $.ajax({
+                            url: "/patent/delete",
+                            type: "post",
+                            data: JSON.stringify(output),
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function f(data) {
+                                // var JsonData=JSON.parse(data);
+                                // this.myData=[];
+                                alert(data.information);
+                            }
+                        });
+                    },
+                    add: function () {
+                        this.myData.push({
+                            name: this.username,
+                            age: this.age
+                        });
+                        var output = {"record": this.username, "name": this.age};
+                        $.ajax({
+                            url: "/patent/resource_pool",
+                            type: "post",
+                            data: JSON.stringify(output),
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function f(data) {
+                                // var JsonData=JSON.parse(data);
+                                alert(data.information);
+                            }
+                        });
+                        this.username = '';
+                        this.age = '';
+                    },
+                    deleteMsg: function (n) {
+                        if (n == -2) {
+                            this.myData = [];
+                        } else {
+                            this.myData.splice(n, 1);
+                        }
+                    },
+                    confirm: function () {
+                        var output = {"name": this.title};
+                        $.ajax({
+                            url: "/patent/confirm",
+                            type: "post",
+                            data: JSON.stringify(output),
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function f(data) {
+                                // var JsonData=JSON.parse(data);
+                                alert(data.information);
+                            }
+                        });
+                    }
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+<div id="menu2" class="menu">
+    <ul>
+        <li><a href="resource_pool.html" style="background-color: #245269;z-index: 100;color: #fff">数据库操作</a></li>
+        <li><a href="show.html" style="color: #fff">资源池信息</a></li>
+        <li><a href="analysis.html" style="color: #fff">信息分析</a></li>
+        <li><a href="query.html" style="color: #fff">专利信息查询</a></li>
+        <li><a href="http://10.108.210.65:10134" style="color: #fff" target="_blank">仪器知识图谱</a></li>
+        <li><a href="http://10.108.210.65:10234" style="color: #fff" target="_blank">专家知识图谱</a></li>
+        <li><a href="http://10.108.210.65:10334" style="color: #fff" target="_blank">专利知识图谱</a></li>
+        <!--<li><a href="#">新闻中心</a></li>-->
+        <!--<li><a href="#">阳光服务</a></li>-->
+        <!--<li><a href="#">加盟代理</a></li>-->
+        <!--<li><a href="#">在线咨询</a></li>-->
+    </ul>
+    <div class="cls"></div>
+</div>
+<div class="container" id="box" style="width: 90%;margin-top: 10px">
+    <form role="form">
+        <div class="form-group">
+            <label for="username">表 名:</label>
+            <input type="text" id="title" class="form-control" placeholder="输入表名" v-model="title">
+        </div>
+        <div class="form-group">
+            <label for="username">字 段:</label>
+            <input type="text" id="username" class="form-control" placeholder="输入字段" v-model="username">
+        </div>
+        <div class="form-group">
+            <label for="age">类 型:</label>
+            <input type="text" id="age" class="form-control" placeholder="输入类型" v-model="age">
+        </div>
+        <!--<div class="form-group">-->
+        <!--<label for="username">备 注:</label>-->
+        <!--<input type="text" id="infor" class="form-control" placeholder="输入备注">-->
+        <!--</div>-->
+        <div class="form-group">
+            <input type="button" value="添加" class="btn btn-primary" v-on:click="add()">
+            <input type="reset" value="重置" class="btn btn-danger">
+        </div>
+    </form>
+    <hr>
+    <table class="table table-bordered table-hover">
+        <caption class="h3 text-info">数据库表信息</caption>
+        <tr class="text-danger">
+            <th class="text-center">序号</th>
+            <th class="text-center">字段</th>
+            <th class="text-center">名称</th>
+            <th class="text-center">操作</th>
+        </tr>
+        <tr class="text-center" v-for="item in myData">
+            <td>{{$index+1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+            <td>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#layer"
+                        v-on:click="nowIndex=$index">删除
+                </button>
+            </td>
+        </tr>
+        <tr v-show="myData.length!=0">
+            <td colspan="4" class="text-right">
+                <button class="btn btn-danger btn-sm" v-on:click="nowIndex=-2" data-toggle="modal" data-target="#layer">
+                    删除全部
+                </button>
+            </td>
+        </tr>
+        <tr v-show="myData.length==0">
+            <td colspan="4" class="text-center text-muted">
+                <p>暂无数据....</p>
+            </td>
+        </tr>
+        <tr v-show="myData.length==0">
+            <div class="form-group">
+                <input type="button" value="创建表" class="btn btn-primary" v-on:click="confirm()">
+                <input type="button" value="删除表" class="btn btn-primary" v-on:click="drop_table()">
+                <input type="button" value="清空缓存" class="btn btn-primary" v-on:click="clear_table()">
+            </div>
+        </tr>
+    </table>
+
+    <!--模态框 弹出框-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="modal-title">确认删除么?</h4>
+                </div>
+                <div class="modal-body text-right">
+                    <button data-dismiss="modal" class="btn btn-primary btn-sm">取消</button>
+                    <button data-dismiss="modal" class="btn btn-danger btn-sm" v-on:click="deleteMsg(nowIndex)">确认
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

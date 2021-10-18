@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>信息分析</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="css/juece.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script>
+        function draw() {
+            var output = {
+                "title": document.getElementById('title').value,
+                "record": document.getElementById('username').value
+            };
+            var myChart = echarts.init(document.getElementById('ec'));
+            var objectdata = [];
+            var num = [];
+            $.ajax({
+                url: "/patent/draw",
+                type: "post",
+                data: JSON.stringify(output),
+                dataType: "json",
+                contentType: "application/json",
+                success: function f(data) {
+                    for (var key in data) {
+                        var d = {};
+                        d['name'] = data[key]['result'];
+                        d['value'] = data[key]['number'];
+                        objectdata.push(d);
+                        num.push(data[key]['result']);
+                    }
+                    myChart.setOption({
+                        title: {
+                            textStyle: {
+                                color: '#fff'
+                            },
+                            text: '信息统计',
+                            left: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{b} : {c} ({d}%)"
+                            // formatter: "{a}<br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            textStyle: {
+                                color: '#fff'
+                            },
+                            // orient: 'vertical',
+                            // top: 'middle',
+                            bottom: 10,
+                            left: 'center',
+                            data: num
+                        },
+                        series: [
+                            {
+                                name: output['record'],
+                                type: 'pie',
+                                radius: '70%',
+                                center: ['50%', '50%'],
+                                selectedMode: 'single',
+                                data: objectdata,
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div id="menu2" class="menu">
+    <ul>
+        <li><a href="resource_pool.html" style="color: #fff">数据库操作</a></li>
+        <li><a href="show.html" style="color: #fff">资源池信息</a></li>
+        <li><a href="analysis.html" style="background-color: #245269;z-index: 100;color: #fff">信息分析</a></li>
+        <li><a href="query.html" style="color: #fff">专利信息查询</a></li>
+        <li><a href="http://10.108.210.65:10134" style="color: #fff" target="_blank">仪器知识图谱</a></li>
+        <li><a href="http://10.108.210.65:10234" style="color: #fff" target="_blank">专家知识图谱</a></li>
+        <li><a href="http://10.108.210.65:10334" style="color: #fff" target="_blank">专利知识图谱</a></li>
+        <!--<li><a href="#">加盟代理</a></li>-->
+        <!--<li><a href="#">在线咨询</a></li>-->
+    </ul>
+    <div class="cls"></div>
+</div>
+
+
+<div class="container" id="box" style="width: 90%;margin-top: 10px;height: 90%;">
+    <form role="form">
+        <div class="form-group">
+            <label for="username">表 名:</label>
+            <input type="text" id="title" class="form-control" placeholder="输入表名">
+        </div>
+        <div class="form-group">
+            <label for="username">字 段:</label>
+            <input type="text" id="username" class="form-control" placeholder="输入字段">
+        </div>
+        <div class="form-group">
+            <input type="button" value="确认" class="btn btn-primary" onclick="draw()">
+        </div>
+    </form>
+    <div class="wrap" style="height: 65%">
+        <div class="center">
+            <div class="sun-title"><span class="">信息分析</span></div>
+            <div id="ec" style="width: 100%;height: 89%;  margin-left: 1%;top: 1.5%;"></div>
+        </div>
+    </div>
+</div>
+<div id="hide" style="display: none"></div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>database</title>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <input id="username">
+    <input id="password">
+    <button type="button" onclick="sub()">提交</button>
+</body>
+<script>
+    function sub() {
+        var output={"username":document.getElementById("username").value,"password":document.getElementById("password").value};
+        alert(JSON.stringify(output));
+        $.ajax({
+            url:"/patent/database",
+            type:"post",
+            data:JSON.stringify(output),
+            dataType:"json",
+            contentType:"application/json",
+            success:function f(data) {
+                // var JsonData=JSON.parse(data);
+                alert(data.usern);
+                document.getElementById("username").value="";
+                document.getElementById("password").value="";
+
+            }
+        });
+    }
+</script>
+</html>

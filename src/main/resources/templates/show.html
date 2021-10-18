@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资源池</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="css/juece.css">
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/china.js" ></script>
+
+</head>
+<body>
+<div id="menu2" class="menu">
+    <ul>
+        <li><a href="resource_pool.html" style="color: #fff">数据库操作</a></li>
+        <li><a href="show.html" style="background-color: #245269;z-index: 100;color: #fff">资源池信息</a></li>
+        <li><a href="analysis.html" style="color: #fff">信息分析</a></li>
+        <li><a href="query.html" style="color: #fff">专利信息查询</a></li>
+        <li><a href="http://10.108.210.65:10134" style="color: #fff" target="_blank">仪器知识图谱</a></li>
+        <li><a href="http://10.108.210.65:10234" style="color: #fff" target="_blank">专家知识图谱</a></li>
+        <li><a href="http://10.108.210.65:10334" style="color: #fff" target="_blank">专利知识图谱</a></li>
+        <!--<li><a href="#">新闻中心</a></li>-->
+        <!--<li><a href="#">阳光服务</a></li>-->
+        <!--<li><a href="#">加盟代理</a></li>-->
+        <!--<li><a href="#">在线咨询</a></li>-->
+    </ul>
+    <div class="cls"></div>
+</div>
+
+
+<div class="container" style="padding: 0">
+    <header>
+        <div class="herder_bg"></div>
+        <!--<a id="switch_btn" href="数据%202019_2.html"></a>-->
+    </header>
+    <article style="padding: 0">
+        <div id="hideleft"></div>
+
+        <div id="hideright"></div>
+
+
+        <div class="wrap">
+            <div class="center">
+                <div class="sun-title"><span class="">专利发明地统计信息（国内）</span></div>
+                <div id="ec3" style="width: 100%;height: 89%;  margin-left: 1%;top: 1.5%;">
+
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var mydata = [
+                {name: '北京',value: '8115' },{name: '天津',value: '649' },
+                {name: '上海',value: '2349' },{name: '重庆',value: '808' },
+                {name: '河北',value: '371' },{name: '河南',value: '3159' },
+                {name: '内蒙古',value: '0' },{name: '辽宁',value: '623' },
+                {name: '黑龙江',value: '0' },{name: '湖南',value: '872' },
+                {name: '安徽',value: '1953' },{name: '山东',value: '1689' },
+                {name: '新疆',value: '0' },{name: '江苏',value: '3824' },
+                {name: '浙江',value: '2167' },{name: '江西',value: '399' },
+                {name: '湖北',value: '1674' },{name: '广西',value: '293' },
+                {name: '甘肃',value: '101' },{name: '山西',value: '154' },
+                {name: '云南',value: '272' },{name: '陕西',value: '971' },
+                {name: '吉林',value: '184' },{name: '福建',value: '968' },
+                {name: '贵州',value: '223' },{name: '广东',value: '11564' },
+                {name: '青海',value: '0' },{name: '西藏',value: '0' },
+                {name: '四川',value: '1851' },{name: '宁夏',value: '0' },
+                {name: '海南',value: '0' },{name: '台湾',value: '213' },
+                {name: '香港',value: '0' },{name: '澳门',value: '0' },{name: '南海诸岛',value: '0'}
+            ];
+            //初始化echarts实例
+            var myChart3 = echarts.init(document.getElementById('ec3'));
+            var option = {
+                // backgroundColor: '#FFFFFF',
+                title: {
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    text: '国内专利信息',
+                    subtext: '',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b} : {c} "
+                },
+                //左侧小导航图标
+                visualMap: {
+                    show : true,
+                    x: 'left',
+                    y: 'center',
+                    splitList: [
+                        {start:400},
+                        {start: 200, end: 400},
+                        {start: 100, end: 200},{start: 0, end: 100},
+                    ],
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    color: ['#5475f5', '#e6ac53', '#9fb5ea','#74e2ca']
+                },
+
+                //配置属性
+                series: [{
+                    zoom:0.9,
+                    name: '数据',
+                    type: 'map',
+                    mapType: 'china',
+                    roam: true,
+                    label: {
+                        normal: {
+                            show: true  //省份名称
+                        },
+                        emphasis: {
+                            show: false
+                        }
+                    },
+                    data:mydata  //数据
+                }]
+            };
+            myChart3.setOption(option);
+        </script>
+
+
+        <div class="left_margin  box-div">
+            <div class="sun-div">
+                <div class="sun-title"><span class="">专利语言统计信息</span></div>
+                <div id="ec1" class="left-ec"></div>
+            </div>
+            <!--<div class="sun-div">-->
+                <!--<div class="sun-title"><span class="">block1</span></div>-->
+                <!--<div id="ec2" class="left-ec"></div>-->
+            <!--</div>-->
+            <!--<div class="sun-div div_btm">-->
+                <!--<div class="sun-title"><span class="">block2</span></div>-->
+                <!--<div id="ec4" class="left-ec"></div>-->
+            <!--</div>-->
+        </div>
+        <script type="text/javascript">
+            var myChart1 = echarts.init(document.getElementById('ec1'));
+            // var weatherIcons = {
+            //     'Sunny': ROOT_PATH + 'data/asset/img/weather/sunny_128.png',
+            //     'Cloudy': ROOT_PATH + 'data/asset/img/weather/cloudy_128.png',
+            //     'Showers': ROOT_PATH + 'data/asset/img/weather/showers_128.png'
+            // };
+
+            option = {
+                title: {
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    text: '信息统计',
+                    subtext: '专利数据',
+                    left: 'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a}<br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    // orient: 'vertical',
+                    // top: 'middle',
+                    bottom: 50,
+                    left: 'center',
+                    data: ['OTHER','CN','JA']
+                },
+                series : [
+                    {
+                        name:'语言',
+                        type: 'pie',
+                        radius : '70%',
+                        center: ['50%', '50%'],
+                        selectedMode: 'single',
+                        data:[
+                            {value:1700, name: 'JA'},
+                            {value:53763, name: 'CN'},
+                            {value:51618, name: 'OTHER'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // var option = {
+            //     xAxis: {
+            //         type: 'category',
+            //         data: ['CN', 'JA', 'OTHER']
+            //     },
+            //     yAxis: {
+            //         type: 'value'
+            //     },
+            //     series: [{
+            //         data: [53763, 1700, 51618],
+            //         type: 'line'
+            //     }]
+            // };
+            myChart1.setOption(option);
+        </script>
+
+
+        <div class="right_margin box-div">
+            <div class="sun-div">
+                <div class="sun-title"><span class="">专利发明地统计信息（国际）</span></div>
+                <div id="ec2" class="left-ec"></div>
+                <!--<ul class="data-contents-height">-->
+                    <!--<li><b>1</b><b class="litext" title="灞桥天骄幼儿园">中国</b>-->
+                        <!--<span class="r unchanged"><strong>92k次</strong></span></li>-->
+                    <!--<li><b>2</b><b class="litext" title="星海柏林阳光幼儿园">美国</b>-->
+                        <!--<span class="r unchanged"><strong>80k次</strong></span></li>-->
+                    <!--<li><b>3</b><b class="litext" title="灞桥区小天鹅幼儿园">日本</b>-->
+                        <!--<span class="r unchanged"><strong>55k次</strong></span></li>-->
+                    <!--<li><b>4</b><b class="litext" title="灞桥区白鹿幼儿园">欧洲</b>-->
+                        <!--<span class="r unchanged"><strong>11k次</strong></span>-->
+                    <!--<li><b>5</b><b class="litext" title="灞桥区白红太阳幼儿园">俄罗斯</b>-->
+                        <!--<span class="r unchanged"><strong>9201次</strong></span></li>-->
+                    <!--<li><b>6</b><b class="litext" title="灞桥区白红太阳幼儿园">英国</b>-->
+                        <!--<span class="r unchanged"><strong>7321次</strong></span></li>-->
+                <!--</ul>-->
+            </div>
+            <!--<div class="sun-div">-->
+                <!--<div class="sun-title"><span class="">block4</span></div>-->
+                <!--&lt;!&ndash;<ul class="data-contents-height" id="jlTop">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>1</b><b class="litext" title="灞桥天骄幼儿园">特朗普</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>60k次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>2</b><b class="litext" title="星海柏林阳光幼儿园">习近平</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>42k次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>3</b><b class="litext" title="灞桥区小天鹅幼儿园">王毅</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>21k次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>4</b><b class="litext" title="灞桥区白鹿幼儿园">莱特西泽</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>9200次</strong></span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>5</b><b class="litext" title="灞桥区白红太阳幼儿园">蓬佩奥</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>8300次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>6</b><b class="litext" title="灞桥区白红太阳幼儿园">奥巴马</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>2100次</strong></span></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div class="sun-div div_btm">-->
+                <!--<div class="sun-title"><span class="">block5</span></div>-->
+                <!--&lt;!&ndash;<ul class="data-contents-height" id="gmTop">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>1</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<b class="litext" title="灞桥天骄幼儿园">中国政府</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>53k次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>2</b><b class="litext" title="星海柏林阳光幼儿园">美国政府</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>48k次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>3</b><b class="litext" title="灞桥区白鹿幼儿园">华为公司</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>47k次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>4</b><b class="litext" title="灞桥区白鹿幼儿园">国际货币基金组织</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>21k次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>5</b><b class="litext" title="灞桥区白红太阳幼儿园">中国外交部</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>9867次</strong></span></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><b>6</b><b class="litext" title="灞桥区白红太阳幼儿园">世界贸易组织</b>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<span class="r unchanged"><strong>7655次</strong></span></li>&ndash;&gt;-->
+                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+            <!--</div>-->
+        </div>
+        <script type="text/javascript">
+            var myChart2 = echarts.init(document.getElementById('ec2'));
+            var option = {
+                //     xAxis: {
+                //         type: 'category',
+                //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                //     },
+                //     yAxis: {
+                //         type: 'value'
+                //     },
+                //     series: [{
+                //         data: [820, 932, 901, 934, 1290, 1330, 1320],
+                //         type: 'line'
+                //     }]
+                title: {
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    text: '信息统计',
+                    subtext: '专利数据',
+                    left: 'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    textStyle: {
+                        color: '#fff'
+                    },
+                    // orient: 'vertical',
+                    // top: 'middle',
+                    bottom: 30,
+                    left: 'center',
+                    data: ['其他','中国','以色列','加拿大','开曼群岛','德国','新加坡','日本','法国','瑞典','瑞士','美国','苏联','英国','荷兰','韩国']
+                },
+                series : [
+                    {
+                        'name':'专利发明地',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '50%'],
+                        selectedMode: 'single',
+                        data:[
+                            {value:35590, name: '其他'},
+                            {value:48145, name: '中国'},
+                            {value:247, name: '以色列'},
+                            {value:294, name: '加拿大'},
+                            {value:614, name: '开曼群岛'},
+                            {value:606, name: '德国'},
+                            {value:102, name: '新加坡'},
+                            {value:2989, name: '日本'},
+                            {value:311, name: '法国'},
+                            {value:124, name: '瑞典'},
+                            {value:110, name: '瑞士'},
+                            {value:12031, name: '美国'},
+                            {value:115, name: '苏联'},
+                            {value:517, name: '英国'},
+                            {value:163, name: '荷兰'},
+                            {value:1689, name: '韩国'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            myChart2.setOption(option);
+        </script>
+    </article>
+</div>
+</body>
+</html>
+
+<!--  >100 国际 -->
+<!--| NULL      |    35590 |-->
+<!--| 中国;           |     48145 |-->
+<!--| 以色列;         |      247 |-->
+<!--| 加拿大;         |      294 |-->
+<!--| 开曼群岛        |      614 |-->
+<!--| 德国;           |      606 |-->
+<!--| 新加坡;         |      102 |-->
+<!--| 日本;           |     2989 |-->
+<!--| 法国;           |      311 |-->
+<!--| 瑞典;           |      124 |-->
+<!--| 瑞士;           |      110 |-->
+<!--| 美国            |      12031 |-->
+<!--| 苏联;           |      115 |-->
+<!--| 英国;           |      517 |-->
+<!--| 荷兰;           |      163 |-->
+<!--| 韩国            |      1689 |-->
+<!--+-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+-->
+
+
+<!--  >100 国内 -->
+<!--| 上海            |     2349 |-->
+<!--| 云南            |      272 |-->
+<!--| 北京            |     8115 |-->
+<!--| 台湾            |      213 |-->
+<!--| 四川            |     1851 |-->
+<!--| 天津            |      649 |-->
+<!--| 宁波            |      184 |-->
+<!--| 安徽            |     1953 |-->
+<!--| 山东            |     1689 |-->
+<!--| 山西            |      154 |-->
+<!--| 广东            |    11564 |-->
+<!--| 广西            |      293 |-->
+<!--| 江苏            |     3824 |-->
+<!--| 江西            |      399 |-->
+<!--| 沈阳            |      285 |-->
+<!--| 河北            |      371 |-->
+<!--| 河南            |     3159 |-->
+<!--| 浙江            |     1983 |-->
+<!--| 湖北            |     1674 |-->
+<!--| 湖南            |      872 |-->
+<!--| 甘肃            |      101 |-->
+<!--| 福建            |      968 |-->
+<!--| 贵州            |      223 |-->
+<!--| 辽宁            |      338 |-->
+<!--| 重庆            |      808 |-->
+<!--| 长春            |      184 |-->
+<!--| 陕西            |      971 |-->
+<!--+-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+-->
+
+
+<!--  >100 源 -->
+<!--| 上海            |     2349 |-->
+<!--| 中国;           |     1598 |-->
+<!--| 中国台湾;       |      671 |-->
+<!--| 云南            |      272 |-->
+<!--| 以色列;         |      247 |-->
+<!--| 加拿大;         |      294 |-->
+<!--| 北京            |     8115 |-->
+<!--| 台湾            |      213 |-->
+<!--| 四川            |     1851 |-->
+<!--| 天津            |      649 |-->
+<!--| 宁波            |      184 |-->
+<!--| 安徽            |     1953 |-->
+<!--| 山东            |     1689 |-->
+<!--| 山西            |      154 |-->
+<!--| 广东            |    11564 |-->
+<!--| 广西            |      293 |-->
+<!--| 开曼群岛        |      451 |-->
+<!--| 开曼群岛;       |      163 |-->
+<!--| 德国;           |      606 |-->
+<!--| 新加坡;         |      102 |-->
+<!--| 日本            |      216 |-->
+<!--| 日本;           |     2642 |-->
+<!--| 日本;日本;      |      131 |-->
+<!--| 江苏            |     3824 |-->
+<!--| 江西            |      399 |-->
+<!--| 沈阳            |      285 |-->
+<!--| 河北            |      371 |-->
+<!--| 河南            |     3159 |-->
+<!--| 法国;           |      311 |-->
+<!--| 浙江            |     1983 |-->
+<!--| 湖北            |     1674 |-->
+<!--| 湖南            |      872 |-->
+<!--| 瑞典;           |      124 |-->
+<!--| 瑞士;           |      110 |-->
+<!--| 甘肃            |      101 |-->
+<!--| 福建            |      968 |-->
+<!--| 美国            |      331 |-->
+<!--| 美国;           |    11257 |-->
+<!--| 美国;美国;      |      290 |-->
+<!--| 美国;美国;美国; |      153 |-->
+<!--| 苏联;           |      115 |-->
+<!--| 英国;           |      517 |-->
+<!--| 荷兰;           |      163 |-->
+<!--| 贵州            |      223 |-->
+<!--| 辽宁            |      338 |-->
+<!--| 重庆            |      808 |-->
+<!--| 长春            |      184 |-->
+<!--| 陕西            |      971 |-->
+<!--| 韩国            |      204 |-->
+<!--| 韩国;           |     1496 |-->
+<!--| 黑龙江          |      430 |-->
+<!--+-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+-->
+
+<!--    >300  -->
+<!--+-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+-->
+<!--| NULL      |    35590 |-->
+<!--| 上海      |     2349 |-->
+<!--| 中国;     |     1598 |-->
+<!--| 北京      |     8115 |-->
+<!--| 四川      |     1851 |-->
+<!--| 天津      |      649 |-->
+<!--| 安徽      |     1953 |-->
+<!--| 山东      |     1689 |-->
+<!--| 广东      |    11564 |-->
+<!--| 开曼群岛  |      451 |-->
+<!--| 德国;     |      606 |-->
+<!--| 日本;     |     2642 |-->
+<!--| 江苏      |     3824 |-->
+<!--| 江西      |      399 |-->
+<!--| 河北      |      371 |-->
+<!--| 河南      |     3159 |-->
+<!--| 法国;     |      311 |-->
+<!--| 浙江      |     1983 |-->
+<!--| 湖北      |     1674 |-->
+<!--| 湖南      |      872 |-->
+<!--| 福建      |      968 |-->
+<!--| 美国      |      331 |-->
+<!--| 美国;     |    11257 |-->
+<!--| 英国;     |      517 |-->
+<!--| 辽宁      |      338 |-->
+<!--| 重庆      |      808 |-->
+<!--| 陕西      |      971 |-->
+<!--| 韩国;     |     1496 |-->
+<!--| 黑龙江    |      430 |-->
+<!--+-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+-->
+
+<!--   >500   -->
+<!--+-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+-->
+<!--| NULL      |    35590 |-->
+<!--| 上海      |     2349 |-->
+<!--| 中国;     |     1469 |-->
+<!--| 中国台湾; |      671 |-->
+<!--| 北京      |     8115 |-->
+<!--| 四川      |     1851 |-->
+<!--| 天津      |      649 |-->
+<!--| 安徽      |     1953 |-->
+<!--| 山东      |     1689 |-->
+<!--| 广东      |    11564 |-->
+<!--| 德国;     |      606 |-->
+<!--| 日本;     |     2642 |-->
+<!--| 江苏      |     3824 |-->
+<!--| 河南      |     3159 |-->
+<!--| 浙江      |     1983 |-->
+<!--| 湖北      |     1674 |-->
+<!--| 湖南      |      872 |-->
+<!--| 福建      |      968 |-->
+<!--| 美国;     |    11257 |-->
+<!--| 英国;     |      517 |-->
+<!--| 重庆      |      808 |-->
+<!--| 陕西      |      971 |-->
+<!--| 韩国;     |     1496 |-->
+<!--+-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;+-->

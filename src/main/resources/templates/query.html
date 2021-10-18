@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>专利信息查询</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/timekeeper.js"></script>
+    <script src="js/date.js"></script>
+    <script src="js/category.js"></script>
+    <script src="js/submit.js"></script>
+    <style>
+        /*table{width:100%;border:1px solid #999;}*/
+    </style>
+</head>
+<body>
+    <div id="menu2" class="menu">
+        <ul>
+            <li><a href="resource_pool.html" style="color: #fff">数据库操作</a></li>
+            <li><a href="show.html" style="color: #fff">资源池信息</a></li>
+            <li><a href="analysis.html" style="color: #fff">信息分析</a></li>
+            <li><a href="query.html" style="background-color: #245269;z-index: 100;color: #fff">专利信息查询</a></li>
+            <li><a href="http://10.108.210.65:10134" style="color: #fff" target="_blank">仪器知识图谱</a></li>
+            <li><a href="http://10.108.210.65:10234" style="color: #fff" target="_blank">专家知识图谱</a></li>
+            <li><a href="http://10.108.210.65:10334" style="color: #fff" target="_blank">专利知识图谱</a></li>
+            <!--<li><a href="#">新闻中心</a></li>-->
+            <!--<li><a href="#">阳光服务</a></li>-->
+            <!--<li><a href="#">加盟代理</a></li>-->
+            <!--<li><a href="#">在线咨询</a></li>-->
+        </ul>
+        <div class="cls"></div>
+    </div>
+
+
+    <div class="query-form row">
+        <form role="form" class="col-md-offset-1 col-md-10" method="post" action="search" name="reg_testdate">
+            <div class="col-md-5" style="margin-bottom: 15px">
+                <div class="form-group ">
+                    <!--<input type="number" class="form-control" name="year" id="year" placeholder="2016">-->
+                    <select class="form-control short-form" name="YYYY" id="year" onChange="YYYYDD(this.value)">
+                        <option value=""></option>
+                    </select>
+                    <label for="year">年</label>
+                </div>
+                <div class="form-group">
+                    <select class="form-control short-form" name="MM" id="month" onChange="MMDD(this.value)">
+                        <option value=""></option>
+                    </select>
+                    <label for="month">月</label>
+                </div>
+                <div class="form-group">
+                    <select class="form-control short-form" name="DD" id="date">
+                        <option value=""></option>
+                    </select>
+                    <label for="date">日</label>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="" id="category-label">类型</label>
+                <select class="form-control category" name="category1" id="patentType" onchange="change1(this.value)">
+                    <option></option>
+                    <option>发明</option>
+                    <option>创新</option>
+                    <option>外观</option>
+                </select>
+                <!--<select class="form-control category" name="category2" id="category2" onchange="change2(this.value)">-->
+                <!--<option value=""></option>-->
+                <!--</select>-->
+                <!--<select class="form-control category" name="category3" id="category3">-->
+                <!--<option value=""></option>-->
+                <!--</select>-->
+            </div>
+            <!--<div class="form-group col-md-2">-->
+                <!--<label for="quarter">第</label>-->
+                <!--<select class="form-control short-form" name="quarter" id="quarter">-->
+                    <!--<option></option>-->
+                    <!--<option>1</option>-->
+                    <!--<option>2</option>-->
+                    <!--<option>3</option>-->
+                    <!--<option>4</option>-->
+                <!--</select>-->
+                <!--<label for="quarter">季度</label>-->
+            <!--</div>-->
+            <!--<div class="form-group col-md-2">-->
+                <!--<label for="day">星期</label>-->
+                <!--<select class="form-control short-form" name="day" id="day">-->
+                    <!--<option></option>-->
+                    <!--<option>一</option>-->
+                    <!--<option>二</option>-->
+                    <!--<option>三</option>-->
+                    <!--<option>四</option>-->
+                    <!--<option>五</option>-->
+                    <!--<option>六</option>-->
+                    <!--<option>日</option>-->
+                <!--</select>-->
+            <!--</div>-->
+            <div class="input-group col-md-3" style="margin-bottom: 15px">
+                <span class="input-group-addon">代理人</span>
+                <input name="director" id="AGY" type="text" class="form-control" placeholder="agent">
+            </div>
+            <div class="input-group col-md-4" style="margin-bottom: 15px">
+                <span class="input-group-addon">专利名称</span>
+                <input name="movie" id="TIVIEW" type="text" class="form-control" placeholder="Patent name">
+            </div>
+
+            <div class="input-group col-md-4" style="margin-bottom: 15px">
+                <span class="input-group-addon">发明人</span>
+                <input name="hero" id="INVIEW" type="text" class="form-control" placeholder="Inventor">
+            </div>
+            <div class="input-group col-md-4" style="margin-bottom: 15px">
+                <span class="input-group-addon">申请人</span>
+                <input name="supporting_role" id="PAVIEW" type="text" class="form-control"
+                       placeholder="Applicant">
+            </div>
+            <div class="input-group col-md-2" style="margin-bottom: 15px">
+                <button class="btn btn-primary" type="button" id="submit" onClick="start_timekeeper()">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="result row">
+        <div class="col-md-12" id="db">
+            <h2 class="title">查询结果
+                <span class="badge" id="result-MySQL"></span>
+                <span class="time">(Time:</span>
+                <span id="time-MySQL" class="time"></span>
+                <span class="time">ms)</span>
+            </h2>
+            <!--<input type="button" value="mysql停止计时！" onClick="end_timekeeper1()">-->
+            <!--<input type="button" value="HDFS停止计时！" onClick="end_timekeeper2()">-->
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>类型</th>
+                    <th>发明人</th>
+                    <th>申请人</th>
+                    <th>专利名</th>
+                    <th>IPC</th>
+                    <th>申请日期</th>
+                    <th>代理人</th>
+                </tr>
+                </thead>
+                <tbody id="table-MYSQL">
+
+                <!--<tr onclick="clickMovie('0767815335')">-->
+                <!--<td>0767815335</td>-->
+                <!--<td>fsafdsafds</td>-->
+                    <!--<td>0767815335</td>-->
+                    <!--<td>fsafdsafds</td>-->
+                    <!--<td>0767815335</td>-->
+                    <!--<td>fsafdsafds</td>-->
+                    <!--<td>0767815335</td>-->
+                    <!--<td>fsafdsafds</td>-->
+                <!--</tr>-->
+                <!--<tr onclick="clickMovie('0767815335')">-->
+                <!--<td>0767815335</td>-->
+                <!--<td>fsafdsafds</td>-->
+                    <!--<td>0767815335</td>-->
+                    <!--<td>fsafdsafds</td>-->
+                    <!--<td>0767815335</td>-->
+                    <!--<td>fsafdsafds</td>-->
+                    <!--<td>0767815335</td>-->
+                    <!--<td>fsafdsafds</td>-->
+                <!--</tr>-->
+
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="col-md-6" id="dfs">-->
+            <!--<h2 class="title">HDFS-->
+                <!--<span class="badge" id="result-HDFS"></span>-->
+                <!--<span class="time">(Time:</span>-->
+                <!--<span id="time-HDFS" class="time"></span>-->
+                <!--<span class="time">ms)</span>-->
+            <!--</h2>-->
+            <!--<table class="table table-hover">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>ID</th>-->
+                    <!--<th>name</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody id="table-HDFS">-->
+                <!--&lt;!&ndash;<tr onclick="clickMovie('0767815335')">&ndash;&gt;-->
+                <!--&lt;!&ndash;<td>0767815335</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td>fsafdsafds</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                <!--&lt;!&ndash;<tr onclick="clickMovie('0767815335')">&ndash;&gt;-->
+                <!--&lt;!&ndash;<td>0767815335</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td>fsafdsafds</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+                <!--</tbody>-->
+            <!--</table>-->
+        <!--</div>-->
+    </div>
+</body>
+</html>

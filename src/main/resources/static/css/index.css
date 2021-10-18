@@ -1,0 +1,75 @@
+.form-group {
+    display: inline;
+}
+
+.form-control {
+    display: inline;
+}
+
+#year {
+    width: 100px;
+}
+
+.query-form .short-form {
+    width: 80px;
+}
+
+.query-form .input-group {
+    display: inline-table;
+    float: inherit;
+    /*margin-left: 14px;*/
+    /*margin-right: 14px;*/
+    padding-left: 14px;
+    padding-left-right: 14px;
+}
+
+.btn {
+    width: 100%;
+}
+
+.query-form {
+    border-bottom: double 1px #eee;
+    box-shadow: 0 0 13px 0 #eee;
+    padding-top: 20px;
+    padding-bottom: 12px;
+    position: absolute;
+    z-index: 999;
+    background-color: #fff;
+}
+
+.result {
+    padding-top: 190px;
+    width: 100%;
+}
+
+.title .time {
+    color: #878787;
+    font-size: smaller;
+    display: inline;
+}
+
+.title {
+    text-align: center;
+}
+
+.table {
+    width: 94%;
+    margin: auto;
+}
+
+#category-label {
+    text-align: right;
+    padding-left: 0;
+    /*width:5%;*/
+}
+
+select.category {
+    display: inline;
+    width: 31%;
+}
+
+.badge {
+    vertical-align: text-top;
+    background-color: #9ccc00;
+}
+
