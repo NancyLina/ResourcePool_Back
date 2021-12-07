@@ -362,14 +362,28 @@ public class ResourcePoolController {
         System.out.println(sql);
         List<table_information> list = rpMapper.search_table(sql);
         String table_name = list.get(0).getName();
-        sql = "select count(*) as value," + record + " as name from " + table_name + " group by " + record + " limit 10";
+        sql = "select count(*) as value," + record + " as name from " + table_name + " where " + record + " is not null group by " + record + " order by value desc limit 10";
         System.out.println(sql);
         List<HashMap<String, Object>> lists = rpMapper.find(sql);
         for (int i = 0; i < lists.size(); i++) {
-            if (lists.get(i).get("name") != null)
+            if (lists.get(i).get("name") != null && !lists.get(i).get("name").equals("")){
+                if(record.equals("sex")){
+                    lists.get(i).replace("name","1","男");
+                    lists.get(i).replace("name","0","女");
+                }
                 records.add(lists.get(i).get("name").toString());
-            else records.add("其他");
+            }
+            else {
+                if(lists.get(i).get("name")==""){
+                    lists.get(i).replace("name","暂缺");
+                }else{
+                    lists.get(i).put("name","暂缺");
+                }
+                records.add("暂缺");
+
+            }
         }
+
         result.put("records", records);
         result.put("values", lists);
         return result;
@@ -604,9 +618,9 @@ public class ResourcePoolController {
         for (int i = 0; i < content.size(); i++) {
             LinkedHashMap data = (LinkedHashMap) content.get(i);
             if (i == 0)
-                condition += data.get("infor") + "=\"" + data.get("name") + "\"";
+                condition += data.get("infor") + " like \"%" + data.get("name") + "%\"";
             else
-                condition += " and " + data.get("infor") + "=\"" + data.get("name") + "\"";
+                condition += " and " + data.get("infor") + " like \"%" + data.get("name") + "%\"";
         }
         sql = "select *from " + table_name;
         if (!condition.equals(" where ")) sql += condition;
@@ -696,6 +710,12 @@ public class ResourcePoolController {
                     head.add(new HashMap<String,String>(){{put("label","购置日期");put("val","buydate");}});
                     String sql = "select id,name,model,makein,place,buydate from equipment";
                     res = (ArrayList) rpMapper.find(sql);
+                    for (int i = 0; i < res.size(); i++) {
+                        for(int j=0;j<head.size();j++){
+                            String key= (String) head.get(j).get("val");
+                            if(res.get(i).get(key)==null) res.get(i).put(key,"暂无信息");
+                        }
+                    }
                     break;
                 case 1:
                     head.add(new HashMap<String,String>(){{put("label","名字");put("val","name");}});
@@ -704,6 +724,12 @@ public class ResourcePoolController {
                     head.add(new HashMap<String,String>(){{put("label","工作单位");put("val","workUnit");}});
                     sql = "select id,name,specialty,degreesName,workUnit from expert";
                     res = (ArrayList) rpMapper.find(sql);
+                    for (int i = 0; i < res.size(); i++) {
+                        for(int j=0;j<head.size();j++){
+                            String key= (String) head.get(j).get("val");
+                            if(res.get(i).get(key)==null) res.get(i).put(key,"暂无信息");
+                        }
+                    }
                     break;
                 case 2:
                     head.add(new HashMap<String,String>(){{put("label","专利名称");put("val","name");}});
@@ -713,6 +739,12 @@ public class ResourcePoolController {
                     head.add(new HashMap<String,String>(){{put("label","专利状态");put("val","status");}});
                     sql = "select id,patentName as name,patentNumber,ipcType,publicationDate,status from patent";
                     res = (ArrayList) rpMapper.find(sql);
+                    for (int i = 0; i < res.size(); i++) {
+                        for(int j=0;j<head.size();j++){
+                            String key= (String) head.get(j).get("val");
+                            if(res.get(i).get(key)==null) res.get(i).put(key,"暂无信息");
+                        }
+                    }
                     break;
             }
         } else if (type > 2) {
